@@ -7,8 +7,14 @@ using System.Threading.Tasks;
 
 namespace Net.S._2018.Zenovich._13.Queue
 {
-    public class UserQueue<T> : IEnumerable<T>
+    public class UserQueue<T> : IUserQueue<T>
     {
+        #region Public fields
+
+        public static readonly int DefaultCapacity = 20;
+
+        #endregion Public fields
+
         #region Private fields
 
         private T[] _queue;
@@ -21,8 +27,10 @@ namespace Net.S._2018.Zenovich._13.Queue
 
         #endregion Private fields
 
+        #region Public ctor
+
         public UserQueue()
-             : this(50)
+            : this(DefaultCapacity)
         {
         }
 
@@ -30,6 +38,10 @@ namespace Net.S._2018.Zenovich._13.Queue
         {
             _queue = new T[capacity];
         }
+
+        #endregion Public ctor
+
+        #region Public methods
 
         public int Count => _count;
 
@@ -86,6 +98,10 @@ namespace Net.S._2018.Zenovich._13.Queue
             return GetEnumerator();
         }
 
+        #endregion Public methods
+
+        #region Private methods
+
         private T this[int index]
         {
             get { return _queue[index]; }
@@ -112,10 +128,18 @@ namespace Net.S._2018.Zenovich._13.Queue
             _queue = newArray;
         }
 
+        #endregion Private methods
+
         private struct UserQueueEnumerator: IEnumerator<T>
         {
+            #region Private fields
+
             private readonly UserQueue<T> _userQueue;
             private int _currentIndex;
+
+            #endregion Private fields
+
+            #region Public ctor
 
             public UserQueueEnumerator(UserQueue<T> userQueue)
             {
@@ -123,10 +147,13 @@ namespace Net.S._2018.Zenovich._13.Queue
                 _currentIndex = -1;
             }
 
+            #endregion Public ctor
+
+
+            #region Public methods
 
             public void Dispose()
             {
-                throw new NotImplementedException();
             }
 
             public bool MoveNext()
@@ -161,6 +188,8 @@ namespace Net.S._2018.Zenovich._13.Queue
             }
 
             object IEnumerator.Current => Current;
+
+            #endregion Public methods
         }
     }
 }

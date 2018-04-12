@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Net.S._2018.Zenovich._13.Queue
 {
-    public interface IUserQueue
+    public interface IUserQueue<T> : IEnumerable<T>
     {
+        int Count { get; }
+
+        void Enqueue(T item);
+
+        T Dequeue();
     }
 }
