@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Net.S._2018.Zenovich._13.Queue
 {
-    public class Class1
+    public interface IUserQueue
     {
     }
 }
