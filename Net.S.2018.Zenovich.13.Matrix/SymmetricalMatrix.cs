@@ -8,12 +8,12 @@ namespace Net.S._2018.Zenovich._13.Matrix
 {
     public class SymmetricalMatrix<T> : SquareMatrix<T>
     {
-        public SymmetricalMatrix(int length) 
-            : base(length)
+        public SymmetricalMatrix(int length, Func<T, T, T> sumFunc) 
+            : base(length, sumFunc)
         {
         }
 
-        public SymmetricalMatrix(T[] array, int length) 
+        public SymmetricalMatrix(T[] array, int length, Func<T, T, T> sumFunc) 
         {
             if (ReferenceEquals(array, null))
             {
@@ -43,6 +43,8 @@ namespace Net.S._2018.Zenovich._13.Matrix
                     index++;
                 }
             }
+
+            this.sumFunc = sumFunc;
         }
 
         public override T this[int RowIndex, int ColumnIndex]

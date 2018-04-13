@@ -18,9 +18,13 @@ namespace Net.S._2018.Zenovich._13.Matrix
 
         protected T[,] matrix;
 
+        protected Func<T, T, T> sumFunc;
+
         #endregion Protected fields
 
-        public SquareMatrix(int length)
+        #region Ctor
+
+        public SquareMatrix(int length, Func<T,T,T> sumFunc)
         {
             if (length < 0)
             {
@@ -31,9 +35,10 @@ namespace Net.S._2018.Zenovich._13.Matrix
             ColumnLength = length;
 
             matrix = new T[RowLength, ColumnLength];
+            this.sumFunc = sumFunc;
         }
 
-        public SquareMatrix(T[] array)
+        public SquareMatrix(T[] array, Func<T, T, T> sumFunc)
         {
             if (ReferenceEquals(array, null))
             {
@@ -56,11 +61,15 @@ namespace Net.S._2018.Zenovich._13.Matrix
                     arrayIndex++;
                 }
             }
+
+            this.sumFunc = sumFunc;
         }
 
         protected SquareMatrix()
         {
         }
+
+        #endregion Ctor
 
         #region Properties
 
@@ -95,7 +104,53 @@ namespace Net.S._2018.Zenovich._13.Matrix
 
         #endregion Properties
 
-        #region Private methods
+        #region Public methods
+
+        public SquareMatrix<T> Sum(SquareMatrix<T> firstMatrix, SquareMatrix<T> secondMatrix)
+        {
+            if (ReferenceEquals(firstMatrix, null))
+            {
+                throw new ArgumentNullException(nameof(firstMatrix));
+            }
+
+            if (ReferenceEquals(secondMatrix, null))
+            {
+                throw new ArgumentNullException(nameof(secondMatrix));
+            }
+
+            SquareMatrix<T> result = new SquareMatrix<T>();
+
+            result.matrix = SumMatrix(firstMatrix.matrix, secondMatrix.matrix);
+
+            return result;
+        }
+
+        #endregion Public methods
+
+        #region Protected methods
+
+        protected T[,] SumMatrix(T[,] firstMatrix, T[,] secondMatrix)
+        {
+            if (firstMatrix.Length != secondMatrix.Length)
+            {
+                throw new ArgumentException("Indexes are not even.");
+            }
+
+            int rowLength = firstMatrix.GetLength(0);
+            int columnLength = firstMatrix.GetLength(1);
+
+            T[,] result = new T[rowLength, columnLength];
+
+            for (int i = 0; i < rowLength; i++)
+            {
+                for (int j = 0; i < columnLength; j++)
+                {
+                    result[i, j] = sumFunc(firstMatrix[i, j], secondMatrix[i, j]);
+                }
+            }
+
+            return result;
+        }
 
         protected void ChangeMatrixEventInvoke(ChangedMatrixEventArgs<T> eventArgs)
         {
@@ -135,7 +190,7 @@ namespace Net.S._2018.Zenovich._13.Matrix
             return false;
         }
 
-        #endregion Private methods
+        #endregion Protected methods
 
     }
 }

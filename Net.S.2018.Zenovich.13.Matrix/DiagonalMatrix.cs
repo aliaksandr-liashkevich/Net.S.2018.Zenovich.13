@@ -8,12 +8,12 @@ namespace Net.S._2018.Zenovich._13.Matrix
 {
     public class DiagonalMatrix<T> : SquareMatrix<T>
     {
-        public DiagonalMatrix(int length) 
-            : base(length)
+        public DiagonalMatrix(int length, Func<T, T, T> sumFunc) 
+            : base(length, sumFunc)
         {
         }
 
-        public DiagonalMatrix(T[] array) 
+        public DiagonalMatrix(T[] array, Func<T, T, T> sumFunc) 
         {
             if (ReferenceEquals(array, null))
             {
@@ -26,6 +26,8 @@ namespace Net.S._2018.Zenovich._13.Matrix
             {
                 matrix[i, i] = array[i];
             }
+
+            this.sumFunc = sumFunc;
         }
 
         protected override void CheckIndexRange(int RowIndex, int ColumnIndex)

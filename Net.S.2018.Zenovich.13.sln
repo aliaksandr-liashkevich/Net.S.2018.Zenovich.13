@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net.S.2018.Zenovich.13.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net.S.2018.Zenovich.13.Matrix", "Net.S.2018.Zenovich.13.Matrix\Net.S.2018.Zenovich.13.Matrix.csproj", "{D0E214ED-E395-4266-B6C7-F10CAB0D8190}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net.S.2018.Zenovich.13.BinarySearchTree", "Net.S.2018.Zenovich.13.BinarySearchTree\Net.S.2018.Zenovich.13.BinarySearchTree.csproj", "{92D183E1-CC4A-4601-9C81-49FF2BB66F28}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{D0E214ED-E395-4266-B6C7-F10CAB0D8190}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0E214ED-E395-4266-B6C7-F10CAB0D8190}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0E214ED-E395-4266-B6C7-F10CAB0D8190}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92D183E1-CC4A-4601-9C81-49FF2BB66F28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92D183E1-CC4A-4601-9C81-49FF2BB66F28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92D183E1-CC4A-4601-9C81-49FF2BB66F28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92D183E1-CC4A-4601-9C81-49FF2BB66F28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
