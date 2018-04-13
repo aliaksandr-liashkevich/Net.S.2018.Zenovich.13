@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Net.S._2018.Zenovich._13.Matrix
 {
@@ -10,11 +14,11 @@ namespace Net.S._2018.Zenovich._13.Matrix
 
         #endregion Public fields
 
-        #region Private fields
+        #region Protected fields
 
-        private T[,] matrix;
+        protected T[,] matrix;
 
-        #endregion Private fields
+        #endregion Protected fields
 
         public SquareMatrix(int length)
         {
@@ -27,16 +31,21 @@ namespace Net.S._2018.Zenovich._13.Matrix
             ColumnLength = length;
 
             matrix = new T[RowLength, ColumnLength];
-        }   
+        }
 
         public SquareMatrix(T[] array)
         {
+            if (ReferenceEquals(array, null))
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+
             if (IsFullSquare(array.Length) == false)
             {
                 throw new ArgumentOutOfRangeException(nameof(array));
             }
 
-            int length = (int) Math.Sqrt(array.Length);
+            int length = (int)Math.Sqrt(array.Length);
             int arrayIndex = 0;
 
             for (int rowIndex = 0; rowIndex < length; rowIndex++)
@@ -49,6 +58,10 @@ namespace Net.S._2018.Zenovich._13.Matrix
             }
         }
 
+        protected SquareMatrix()
+        {
+        }
+
         #region Properties
 
         public int RowLength { get; protected set; }
@@ -59,15 +72,7 @@ namespace Net.S._2018.Zenovich._13.Matrix
         {
             get
             {
-                if (RowIndex < 0 || RowIndex >= RowLength)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(RowIndex));
-                }
-
-                if (ColumnIndex < 0 || ColumnIndex >= ColumnLength)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(ColumnIndex));
-                }
+                CheckIndexRange(RowIndex, ColumnIndex);
 
                 return matrix[RowIndex, ColumnIndex];
             }
@@ -78,21 +83,13 @@ namespace Net.S._2018.Zenovich._13.Matrix
                     throw new ArgumentNullException();
                 }
 
-                if (RowIndex < 0 || RowIndex >= RowLength)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(RowIndex));
-                }
-
-                if (ColumnIndex < 0 || ColumnIndex >= ColumnLength)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(ColumnIndex));
-                }
+                CheckIndexRange(RowIndex, ColumnIndex);
 
                 var eventArgs = CreateChangeMatrixEventArgs(RowIndex, ColumnIndex, value);
 
                 matrix[RowIndex, ColumnIndex] = value;
 
-                ChangedMatrixEvent.Invoke(this, eventArgs);
+                ChangeMatrixEventInvoke(eventArgs);
             }
         }
 
@@ -100,17 +97,35 @@ namespace Net.S._2018.Zenovich._13.Matrix
 
         #region Private methods
 
-        private ChangedMatrixEventArgs<T> CreateChangeMatrixEventArgs(int RowIndex, int ColumnIndex, T oldValue)
+        protected void ChangeMatrixEventInvoke(ChangedMatrixEventArgs<T> eventArgs)
+        {
+            ChangedMatrixEvent.Invoke(this, eventArgs);
+        }
+
+        protected virtual void CheckIndexRange(int RowIndex, int ColumnIndex)
+        {
+            if (RowIndex < 0 || RowIndex >= RowLength)
+            {
+                throw new ArgumentOutOfRangeException(nameof(RowIndex));
+            }
+
+            if (ColumnIndex < 0 || ColumnIndex >= ColumnLength)
+            {
+                throw new ArgumentOutOfRangeException(nameof(ColumnIndex));
+            }
+        }
+
+        protected ChangedMatrixEventArgs<T> CreateChangeMatrixEventArgs(int RowIndex, int ColumnIndex, T oldValue)
         {
             T newValue = matrix[RowIndex, ColumnIndex];
 
-            return new ChangedMatrixEventArgs<T>(RowIndex, ColumnIndex, 
+            return new ChangedMatrixEventArgs<T>(RowIndex, ColumnIndex,
                 oldValue, newValue);
         }
 
-        private bool IsFullSquare(int number)
+        protected bool IsFullSquare(int number)
         {
-            int sqrtNumber = (int) Math.Sqrt(number);
+            int sqrtNumber = (int)Math.Sqrt(number);
 
             if (number * number == sqrtNumber)
             {
