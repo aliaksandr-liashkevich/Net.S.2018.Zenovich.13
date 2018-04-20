@@ -90,7 +90,7 @@ namespace Net.S._2018.Zenovich._13.Queue
 
         public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return new UserQueueEnumerator(this);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
