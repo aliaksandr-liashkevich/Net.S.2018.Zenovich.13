@@ -106,21 +106,18 @@ namespace Net.S._2018.Zenovich._13.Matrix
 
         #region Public methods
 
-        public SquareMatrix<T> Sum(SquareMatrix<T> firstMatrix, SquareMatrix<T> secondMatrix)
+        public SquareMatrix<T> Sum(SquareMatrix<T> rightMatrix)
         {
-            if (ReferenceEquals(firstMatrix, null))
+            if (ReferenceEquals(rightMatrix, null))
             {
-                throw new ArgumentNullException(nameof(firstMatrix));
-            }
-
-            if (ReferenceEquals(secondMatrix, null))
-            {
-                throw new ArgumentNullException(nameof(secondMatrix));
+                throw new ArgumentNullException(nameof(rightMatrix));
             }
 
             SquareMatrix<T> result = new SquareMatrix<T>();
 
-            result.matrix = SumMatrix(firstMatrix.matrix, secondMatrix.matrix);
+            result.matrix = SumMatrix(this.matrix, rightMatrix.matrix);
+            result.RowLength = matrix.GetLength(0);
+            result.ColumnLength = matrix.GetLength(1);
 
             return result;
         }
@@ -143,7 +140,7 @@ namespace Net.S._2018.Zenovich._13.Matrix
 
             for (int i = 0; i < rowLength; i++)
             {
-                for (int j = 0; i < columnLength; j++)
+                for (int j = 0; j < columnLength; j++)
                 {
                     result[i, j] = sumFunc(firstMatrix[i, j], secondMatrix[i, j]);
                 }

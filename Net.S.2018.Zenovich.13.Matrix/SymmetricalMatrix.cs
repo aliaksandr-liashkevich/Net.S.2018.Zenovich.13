@@ -27,8 +27,11 @@ namespace Net.S._2018.Zenovich._13.Matrix
                 throw new ArgumentOutOfRangeException(nameof(array));
             }
 
-            int index = 0;
+            RowLength = length;
+            ColumnLength = length;
+            matrix = new T[length, length];
 
+            int index = 0;
             for (int i = 0; i < length; i++)
             {
                 for (int j = i; j < length; j++)
@@ -65,11 +68,11 @@ namespace Net.S._2018.Zenovich._13.Matrix
             }
         }
 
-        private int GetJaggedArrayLength(int number)
+        private int GetJaggedArrayLength(int length)
         {
             int result = 0;
 
-            for (int i = number; i > 1; i--)
+            for (int i = length; i > 0; i--)
             {
                 result = result + i;
             }

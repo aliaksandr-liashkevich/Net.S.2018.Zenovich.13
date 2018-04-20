@@ -21,6 +21,10 @@ namespace Net.S._2018.Zenovich._13.Matrix
             }
 
             int length = array.Length;
+            RowLength = length;
+            ColumnLength = length;
+
+            matrix = new T[length, length];
 
             for (int i = 0; i < length; i++)
             {
@@ -28,6 +32,36 @@ namespace Net.S._2018.Zenovich._13.Matrix
             }
 
             this.sumFunc = sumFunc;
+        }
+
+        public override T this[int RowIndex, int ColumnIndex]
+        {
+            get
+            {
+                base.CheckIndexRange(RowIndex, ColumnIndex);
+                
+                if (RowIndex != ColumnIndex)
+                {
+                    return default(T);
+                }
+
+                return matrix[RowIndex, ColumnIndex];
+            }
+            set
+            {
+                if (ReferenceEquals(value, null))
+                {
+                    throw new ArgumentNullException();
+                }
+
+                this.CheckIndexRange(RowIndex, ColumnIndex);
+
+                var eventArgs = CreateChangeMatrixEventArgs(RowIndex, ColumnIndex, value);
+
+                matrix[RowIndex, ColumnIndex] = value;
+
+                ChangeMatrixEventInvoke(eventArgs);
+            }
         }
 
         protected override void CheckIndexRange(int RowIndex, int ColumnIndex)
