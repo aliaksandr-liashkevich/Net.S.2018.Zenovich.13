@@ -46,17 +46,22 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MatrixTest.cs" />
     <Compile Include="QueueTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserBinarySearchTree.cs" />
+    <Compile Include="UserBinarySearchTreeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Net.S.2018.Zenovich.13.BinarySearchTree\Net.S.2018.Zenovich.13.BinarySearchTree.csproj">
+      <Project>{92D183E1-CC4A-4601-9C81-49FF2BB66F28}</Project>
+      <Name>Net.S.2018.Zenovich.13.BinarySearchTree</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Net.S.2018.Zenovich.13.Matrix\Net.S.2018.Zenovich.13.Matrix.csproj">
       <Project>{D0E214ED-E395-4266-B6C7-F10CAB0D8190}</Project>
       <Name>Net.S.2018.Zenovich.13.Matrix</Name>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,17 +12,19 @@ namespace Net.S._2018.Zenovich._13.BinarySearchTree
         private readonly IComparer<T> comparer;
         private Node<T> root;
 
-        public UserBinarySearchTree(T element)
+        public UserBinarySearchTree(T element, IComparer<T> comparer = null)
         {
-            if (ReferenceEquals(comparer, null))
+            this.comparer = ReferenceEquals(comparer,null) 
+                ? Comparer<T>.Default 
+                : comparer;
+
+            if (ReferenceEquals(this.comparer, null))
             {
                 throw new ArgumentNullException(nameof(comparer));
             }
 
             root = new Node<T>();
-            root.Value = element;
-
-            this.comparer = Comparer<T>.Default;
+            root.Value = element;   
         }
 
         public Node<T> Root
